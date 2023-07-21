@@ -13,9 +13,9 @@ jobs:
 
       - name: Set up Git
         run: |
-          git config --global user.name 'themuuln'
+          git config --global user.name 'themuuuln'
           # Change this username above  ^^^^^^^^^
-          git config --global user.email 'zerone.offical@gmail.com'
+          git config --global user.email 'themuln.official@gmail.com'
           # Change this email above       ^^^^^^^^^^^^^^^^^^^^^^^^
           git config pull.rebase false  # Disable pull rebase to avoid potential conflicts.
 
