@@ -2,42 +2,36 @@ name: Auto Commit
 
 on:
   schedule:
-    - cron: '*/5 * * * *' 
+    - cron: '* */1 * * *'  # Schedule the workflow to run every hour.
 
 jobs:
   auto_commit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  # Action to checkout the repository.
 
       - name: Set up Git
         run: |
           git config --global user.name 'themuuln'
+          # Change this username above  ^^^^^^^^^
           git config --global user.email 'zerone.offical@gmail.com'
-          git config pull.rebase false
+          # Change this email above       ^^^^^^^^^^^^^^^^^^^^^^^^
+          git config pull.rebase false  # Disable pull rebase to avoid potential conflicts.
 
       - name: Push Empty Commits
         run: |
           cd $GITHUB_WORKSPACE
           branch="main"
 
-          # Generate a single commit message for all the empty commits
-          timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-          commit_message="Automated empty commit at $timestamp"
+          timestamp=$(date '+%Y-%m-%d %H:%M:%S')  # Get the current timestamp.
+          commit_message="Automated empty commit at $timestamp by themuuln/auto-committer"  # Prepare commit message.
 
-          # Pull the latest changes from the remote repository
-          git pull origin $branch --ff-only
+          git pull origin $branch --ff-only  # Ensure the local branch is up to date with the remote.
 
-          # Push 5 empty commits with the same message
-          for i in {1..5}; do
-            git commit --allow-empty -m "$commit_message"
+          for i in {1..2}; do
+          # Change this ^^^ number above for commit count
+            git commit --allow-empty -m "$commit_message"  # Create empty commits with the specified message.
           done
 
-          # Push the commits to the remote repository
-          git push origin $branch
-
-      - name: Cleanup
-        run: |
-          git config --unset-all user.name
-          git config --unset-all user.email
+          git push origin $branch  # Push the new empty commits to the remote repository.
